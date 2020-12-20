@@ -19,11 +19,20 @@ public class LongestSubstringWithoutRepeatingCharacters {
         System.out.println(obj.lengthOfLongestSubstring(s));
         s = "aab";
         System.out.println(obj.lengthOfLongestSubstring(s));
+        s = "dvdf";
+        System.out.println(obj.lengthOfLongestSubstring(s));
         
     }
 
-    //Take 1 : failed
-    public int lengthOfLongestSubstringTake1Failed(String s) {
+    /**
+     * creating hashmap of values from i to j with key as char and index as its value.
+     * once duplicate found, discard the map and calculate length 
+     * and create the new map with current element inserged as first element.
+     * @param s
+     * @return
+     */
+    //Take 1 : failed : take 3: passed
+    public int lengthOfLongestSubstring(String s) {
         int len = 0;
         //base condition
         if(s == null || s.length() == 0) return len;
@@ -31,9 +40,11 @@ public class LongestSubstringWithoutRepeatingCharacters {
         char[] arr= s.toCharArray();
         Map<Integer,Integer>  map = new HashMap<>();
         for(int i=0;i<arr.length ; i++){
-            if(map.containsKey(Integer.valueOf(arr[i])) ){
+            Integer match = map.get(Integer.valueOf(arr[i]));
+            if(match != null) {
                len=Math.max(len, map.values().size()); 
                map =new HashMap<>();
+               i = match+1;
              }
             map.put(Integer.valueOf(arr[i]), i);
             
@@ -44,7 +55,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
     }
 
 
-    take 2 halted:
+   /*  take 2 halted:
     public int lengthOfLongestSubstring(String s) {
         int len = 0;
         //base condition
@@ -61,5 +72,5 @@ public class LongestSubstringWithoutRepeatingCharacters {
         }        
 
      return len;
-    }
+    } */
 }
