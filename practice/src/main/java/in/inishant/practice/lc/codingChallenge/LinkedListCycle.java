@@ -1,5 +1,6 @@
 package in.inishant.practice.lc.codingChallenge;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,16 +10,19 @@ public class LinkedListCycle {
     }
 
     public boolean hasCycle(ListNode head) {
-        Set<ListNode> set = new HashSet<>();
+        HashMap<Integer,Integer> map = new HashMap<>();
         boolean isCycle = false;
         ListNode temp=head;
-        set.add(temp);
-        while(temp !=null && temp.next != null ){
-            if(set.add(temp.next))
-                temp = temp.next;
-                else{
+        
+        while(temp !=null ){
+            Integer key = temp.hashCode();
+            if(map.containsKey(key))
+                {
                     isCycle = true;
                     break;
+                }else{
+                    map.put(key, key);
+                    temp= temp.next;
                 }
             
         }
