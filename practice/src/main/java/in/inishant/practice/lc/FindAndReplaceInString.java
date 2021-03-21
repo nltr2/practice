@@ -21,9 +21,9 @@ public class FindAndReplaceInString {
 
     public String findReplaceString(String S, int[] indexes, String[] sources, String[] targets) {
        // int[] origArr= Arrays.copyOf(indexes, indexes.length);
-        Map<Integer,String> source_target = new HashMap<>();
+        Map<Integer,Integer> source_target = new HashMap<>();
         for (int i = 0; i < indexes.length; i++) {
-            source_target.put(indexes[i],sources[i]+"_"+targets[i]);
+            source_target.put(indexes[i],i);
         }
         Arrays.sort(indexes);
         
@@ -42,13 +42,13 @@ public class FindAndReplaceInString {
                     processedIndex=currentIndex-1;
                 }
                 //match indexes for source and orignal string 
-                String[] s_t = source_target.get(currentIndex).split("_") ;
-                String source = s_t[0];
+               
+                String source = sources[source_target.get(currentIndex)];
                 // can cause index out of bounds : TODO check :  currentIndex+source.length() <=  S.length
                 String subStringTobeMatched = S.substring(currentIndex, currentIndex+source.length());
                 //if matched add the target string and move processedIndex pointer of original to end of source string 
                 if(subStringTobeMatched.equals(source) ){
-                    sb.append(s_t[1]);
+                    sb.append(targets[source_target.get(currentIndex)]);
                     processedIndex = currentIndex+source.length()-1;
                 }
                 //else continue;
